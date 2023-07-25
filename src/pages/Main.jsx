@@ -13,6 +13,20 @@ export default function Main() {
       author:
         "작성자입니다. 추후에 firebase와 연결 후 이메일을 여기에 작성하겠습니다.",
     },
+    {
+      id: 2,
+      title: "제목입니다2.",
+      content: "내용입니다2.",
+      author:
+        "작성자입니다2. 추후에 firebase와 연결 후 이메일을 여기에 작성하겠습니다.",
+    },
+    {
+      id: 3,
+      title: "제목입니다3",
+      content: "내용입니다3.",
+      author:
+        "작성자입니다3. 추후에 firebase와 연결 후 이메일을 여기에 작성하겠습니다.",
+    },
   ]);
   return (
     <>
@@ -87,7 +101,7 @@ export default function Main() {
                   gap: "12px",
                 }}
               >
-                <div>{dataList.authors}</div>
+                <div>{dataList.author}</div>
                 <div>
                   <button
                     onClick={() => {
