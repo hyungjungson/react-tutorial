@@ -14,14 +14,17 @@ export default function Header() {
         padding: "0 24px 0 24px",
       }}
     >
-      <h1
-        style={{
-          color: "gray",
-          cursor: "pointer",
-        }}
-      >
-        <FaHome />
-      </h1>
+      {/* Link태그 추가하여 메인페이지로 이동 */}
+      <Link to="/">
+        <h1
+          style={{
+            color: "gray",
+            cursor: "pointer",
+          }}
+        >
+          <FaHome />
+        </h1>
+      </Link>
       <div
         style={{
           display: "flex",
