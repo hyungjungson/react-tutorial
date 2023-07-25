@@ -3,8 +3,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
 
-export default function Main({ datas }) {
+// App.jsx에서 props로 전달 받아온다.
+export default function Main({ datas, setDatas, handleEditClick }) {
+  // 페이지 이동 navigate 함수
   const navigate = useNavigate();
+
+  // 삭제버튼 클릭시 삭제
+  const handleDeleteClick = (targetId) => {
+    console.log(`${targetId}가 삭제되었습니다.`);
+    // 선택된 게시물을 제외하고 새 게시물 리스트 newDiaryList를 생성
+    const newDiaryList = datas.filter((data) => {
+      return data.id !== targetId;
+    });
+    // 새 게시물 리스트를 상태에 저장
+    setDatas(newDiaryList);
+  };
 
   return (
     <>
@@ -47,16 +60,16 @@ export default function Main({ datas }) {
                 padding: "12px 16px 12px 16px",
               }}
             >
+              {/* App.jsx에서 props로 받아서 클릭시 수정페이지로 이동 */}
               <div
-                onClick={() => {
-                  navigate(`/detail/${data.id}`);
-                }}
+                onClick={() => handleEditClick(data.id)}
                 style={{
                   flex: 4,
                   borderRight: "1px solid lightgrey",
                   cursor: "pointer",
                 }}
               >
+                {/* App.jsx에서 props로 받아서 제목 데이터 받아오기  */}
                 <h2>{data.title}</h2>
                 <p
                   style={{
@@ -66,6 +79,7 @@ export default function Main({ datas }) {
                     whiteSpace: "nowrap",
                   }}
                 >
+                  {/* App.jsx에서 props로 받아서 내용 데이터 받아오기  */}
                   {data.content}
                 </p>
               </div>
@@ -79,12 +93,12 @@ export default function Main({ datas }) {
                   gap: "12px",
                 }}
               >
+                {/* App.jsx에서 props로 받아서 작성자 데이터 받아오기  */}
                 <div>{data.author}</div>
                 <div>
+                  {/* 클릭시 edit페이지로 이동 */}
                   <button
-                    onClick={() => {
-                      navigate("/edit");
-                    }}
+                    onClick={() => handleEditClick(data.id)}
                     style={{
                       border: "none",
                       padding: "8px",
@@ -97,10 +111,12 @@ export default function Main({ datas }) {
                   >
                     수정
                   </button>
+                  {/* 삭제 버튼 클릭시 게시물 삭제 */}
                   <button
-                    onClick={() => {
-                      alert("삭제할까?");
-                    }}
+                    onClick={() => handleDeleteClick(data.id)}
+                    // onClick={() => {
+                    //   alert("삭제할까?");
+                    // }}
                     style={{
                       border: "none",
                       padding: "8px",
