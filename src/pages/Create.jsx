@@ -33,7 +33,7 @@ export default function Create({ setDatas, datas }) {
     // 현재 이벤트 동작 중단
     e.preventDefault();
     // 새로운 게시물을 생성하기 위한 id 생성
-    const newId = datas.length + 1;
+    const newId = datas.length + 1; // * 수정할 것 *
     const newData = { id: newId, ...formData };
     // 새 게시물을 기존 데이터에 추가하고 입력 값 초기화
     setDatas([...datas, newData]);
