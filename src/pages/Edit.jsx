@@ -1,9 +1,9 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { updateTitle, updateContent, updatePost } from "../index";
+import { updateTitle, updateContent, updatePost, clearForm } from "../index";
 
 export default function Edit() {
   const { state } = useLocation();
@@ -46,6 +46,14 @@ export default function Edit() {
     );
     navigate("/");
   };
+
+  // Edit 페이지가 렌더링될 때마다 실행 form 초기화
+  useEffect(() => {
+    return () => {
+      // Edit페이지가 언마운트 될 때 form 초기화하
+      dispatch(clearForm());
+    };
+  }, [dispatch]);
 
   return (
     <Fragment>
