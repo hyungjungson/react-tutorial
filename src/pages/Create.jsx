@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addPost, clearForm } from "../index";
 
 export default function Create() {
+  // redux store에서 create 상태 가져오기
   const createForm = useSelector((state) => state.create);
   const dispatch = useDispatch();
 
@@ -15,6 +16,8 @@ export default function Create() {
     content: "",
   });
   const navigate = useNavigate();
+
+  // input에 입력값이 변경될때
   const onChangeHandler = (e) => {
     setInputs((prev) => ({
       ...prev,
@@ -22,6 +25,7 @@ export default function Create() {
     }));
   };
 
+  // 추가하기 버튼
   const onAddBtnHandler = (e) => {
     dispatch(
       addPost({
