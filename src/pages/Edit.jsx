@@ -9,6 +9,7 @@ export default function Edit() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  // redux store에서 create 상태 가져오기
   const editForm = useSelector((state) => state.create);
   const dispatch = useDispatch();
 
@@ -17,6 +18,7 @@ export default function Edit() {
   //   content: state?.post.content || "",
   // });
 
+  // 입력값이 변경될 때
   const onChangeHandler = (e) => {
     // setInputs((prev) => ({
     //   ...prev,
@@ -31,6 +33,7 @@ export default function Edit() {
     }
   };
 
+  // 수정하기 버튼
   const onSaveBtnHandler = (e) => {
     e.preventDefault();
     // 수정 내용 저장
