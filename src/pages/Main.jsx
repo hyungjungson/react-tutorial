@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../index";
 
-export default function Main({ posts, setPosts }) {
+export default function Main() {
+  const posts = useSelector((state) => state.게시물들);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  console.log({ posts });
+  // console.log({ posts });
   return (
     <>
       <Header />
@@ -102,8 +107,14 @@ export default function Main({ posts, setPosts }) {
                   onClick={() => {
                     const result = window.confirm("정말로 삭제하시겠습니까?");
                     if (result) {
-                      setPosts((prev) => prev.filter((p) => p.id !== post.id));
+                      dispatch(deletePost(post.id));
+                      // setPosts((prev) => prev.filter((p) => p.id !== post.id));
                     }
+
+                    // const result = window.confirm("정말로 삭제하시겠습니까?");
+                    // if (result) {
+                    //   setPosts((prev) => prev.filter((p) => p.id !== post.id));
+                    // }
                   }}
                   style={{
                     border: "none",
