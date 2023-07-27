@@ -1,10 +1,15 @@
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../index";
 
-export default function Detail({ posts, setPosts }) {
-  const { id } = useParams();
+export default function Detail() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const posts = useSelector((state) => state.게시물들);
   const post = posts.find((post) => post.id === id);
 
   return (
@@ -61,7 +66,8 @@ export default function Detail({ posts, setPosts }) {
             onClick={() => {
               const result = window.confirm("정말로 삭제하시겠습니까?");
               if (result) {
-                setPosts((prev) => prev.filter((p) => p.id !== post.id));
+                dispatch(deletePost(post.id));
+                // setPosts((prev) => prev.filter((p) => p.id !== post.id));
                 navigate("/");
               }
             }}

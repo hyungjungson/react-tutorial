@@ -3,8 +3,13 @@ import Container from "../common/Container";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addPost, clearForm } from "../index";
 
-export default function Create({ setPosts }) {
+export default function Create() {
+  const createForm = useSelector((state) => state.create);
+  const dispatch = useDispatch();
+
   const [inputs, setInputs] = useState({
     title: "",
     content: "",
@@ -16,6 +21,20 @@ export default function Create({ setPosts }) {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const onAddBtnHandler = (e) => {
+    dispatch(
+      addPost({
+        id: nanoid(),
+        author: "병수",
+        title: createForm.title,
+        content: createForm.content,
+      })
+    );
+    dispatch(clearForm()); // 폼 초기화
+    navigate("/");
+  };
+
   return (
     <>
       <Header />
@@ -27,20 +46,20 @@ export default function Create({ setPosts }) {
             flexDirection: "column",
             justifyContent: "space-evenly",
           }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            setPosts((prev) => {
-              return [
-                ...prev,
-                {
-                  id: nanoid(),
-                  author: "병수",
-                  ...inputs,
-                },
-              ];
-            });
-            navigate("/");
-          }}
+          // onSubmit={(e) => {
+          //   e.preventDefault();
+          //   setPosts((prev) => {
+          //     return [
+          //       ...prev,
+          //       {
+          //         id: nanoid(),
+          //         author: "병수",
+          //         ...inputs,
+          //       },
+          //     ];
+          //   });
+          //   navigate("/");
+          // }}
         >
           <div>
             <input
@@ -91,6 +110,7 @@ export default function Create({ setPosts }) {
               backgroundColor: "skyblue",
               cursor: "pointer",
             }}
+            onClick={onAddBtnHandler}
           >
             추가하기
           </button>

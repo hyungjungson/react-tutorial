@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
-let 게시물들 = createSlice({
+const 게시물들 = createSlice({
   name: "posts",
   initialState: [
     {
@@ -32,14 +32,39 @@ let 게시물들 = createSlice({
     deletePost: (state, action) => {
       return state.filter((post) => post.id !== action.payload);
     },
+    addPost: (state, action) => {
+      state.push(action.payload);
+    },
   },
 });
 
-export const { deletePost } = 게시물들.actions;
+const createForm = createSlice({
+  name: "create",
+  initialState: {
+    title: "",
+    content: "",
+  },
+  reducers: {
+    updateTitle: (state, action) => {
+      state.title = action.payload;
+    },
+    updateContent: (state, action) => {
+      state.content = action.payload;
+    },
+    clearForm: (state) => {
+      state.title = "";
+      state.content = "";
+    },
+  },
+});
+
+export const { deletePost, addPost } = 게시물들.actions;
+export const { updateTitle, updateContent, clearForm } = createForm.actions;
 
 const store = configureStore({
   reducer: {
     게시물들: 게시물들.reducer,
+    create: createForm.reducer,
   },
 });
 
