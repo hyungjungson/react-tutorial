@@ -17,8 +17,7 @@ function App() {
       <Route path="/" element={<Main />} />
       <Route path="/detail/:id" element={<Detail />} />
       <Route path="/create" element={<Create />} />
-      {/*
-      <Route path="/edit" element={<Edit setPosts={setPosts} />} /> */}
+      <Route path="/edit" element={<Edit />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
     </Routes>

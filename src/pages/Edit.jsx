@@ -1,21 +1,47 @@
 import { Fragment, useState } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { updateTitle, updateContent, updatePost } from "../index";
 
-export default function Edit({ setPosts }) {
+export default function Edit() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [inputs, setInputs] = useState({
-    title: state?.post.title || "",
-    content: state?.post.content || "",
-  });
+
+  const editForm = useSelector((state) => state.create);
+  const dispatch = useDispatch();
+
+  // const [inputs, setInputs] = useState({
+  //   title: state?.post.title || "",
+  //   content: state?.post.content || "",
+  // });
 
   const onChangeHandler = (e) => {
-    setInputs((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    // setInputs((prev) => ({
+    //   ...prev,
+    //   [e.target.name]: e.target.value,
+    // }));
+
+    const { name, value } = e.target;
+    if (name === "title") {
+      dispatch(updateTitle(value));
+    } else if (name === "content") {
+      dispatch(updateContent(value));
+    }
+  };
+
+  const onSaveBtnHandler = (e) => {
+    e.preventDefault();
+    // 수정 내용 저장
+    dispatch(
+      updatePost({
+        id: state?.post.id,
+        title: editForm.title,
+        content: editForm.content,
+      })
+    );
+    navigate("/");
   };
 
   return (
@@ -29,20 +55,7 @@ export default function Edit({ setPosts }) {
             flexDirection: "column",
             justifyContent: "space-evenly",
           }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            setPosts((prev) => {
-              return prev.map((post) =>
-                post.id === state?.post.id
-                  ? {
-                      ...post,
-                      ...inputs,
-                    }
-                  : post
-              );
-            });
-            navigate("/");
-          }}
+          onSubmit={onSaveBtnHandler}
         >
           <div>
             <input
@@ -57,7 +70,7 @@ export default function Edit({ setPosts }) {
                 padding: "8px",
                 boxSizing: "border-box",
               }}
-              value={inputs.title}
+              value={editForm.title}
               onChange={onChangeHandler}
             />
           </div>
@@ -79,7 +92,7 @@ export default function Edit({ setPosts }) {
                 padding: "12px",
                 boxSizing: "border-box",
               }}
-              value={inputs.content}
+              value={editForm.content}
               onChange={onChangeHandler}
             />
           </div>

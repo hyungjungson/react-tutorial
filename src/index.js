@@ -35,6 +35,14 @@ const 게시물들 = createSlice({
     addPost: (state, action) => {
       state.push(action.payload);
     },
+    updatePost: (state, action) => {
+      const { id, title, content } = action.payload;
+      const postIndex = state.findIndex((post) => post.id === id);
+      if (postIndex !== -1) {
+        state[postIndex].title = title;
+        state[postIndex].content = content;
+      }
+    },
   },
 });
 
@@ -58,7 +66,7 @@ const createForm = createSlice({
   },
 });
 
-export const { deletePost, addPost } = 게시물들.actions;
+export const { deletePost, addPost, updatePost } = 게시물들.actions;
 export const { updateTitle, updateContent, clearForm } = createForm.actions;
 
 const store = configureStore({
