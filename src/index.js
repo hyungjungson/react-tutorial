@@ -29,12 +29,15 @@ const 게시물들 = createSlice({
     },
   ],
   reducers: {
+    // 게시물 삭제
     deletePost: (state, action) => {
       return state.filter((post) => post.id !== action.payload);
     },
+    // 게시물 추가
     addPost: (state, action) => {
       state.push(action.payload);
     },
+    // 게시물 업데이트
     updatePost: (state, action) => {
       const { id, title, content } = action.payload;
       const postIndex = state.findIndex((post) => post.id === id);
@@ -46,6 +49,7 @@ const 게시물들 = createSlice({
   },
 });
 
+// 새로운 게시물 생성
 const createForm = createSlice({
   name: "create",
   initialState: {
@@ -53,12 +57,15 @@ const createForm = createSlice({
     content: "",
   },
   reducers: {
+    // 새 게시물 제목 업데이트
     updateTitle: (state, action) => {
       state.title = action.payload;
     },
+    // 새 게시물 내용 업데이트
     updateContent: (state, action) => {
       state.content = action.payload;
     },
+    // 새 게시물 폼 초기화
     clearForm: (state) => {
       state.title = "";
       state.content = "";
