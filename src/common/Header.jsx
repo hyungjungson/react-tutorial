@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 
@@ -14,17 +13,17 @@ export default function Header() {
         padding: "0 24px 0 24px",
       }}
     >
-      {/* Link태그 추가하여 메인페이지로 이동 */}
-      <Link to="/">
-        <h1
-          style={{
-            color: "gray",
-            cursor: "pointer",
-          }}
-        >
-          <FaHome />
-        </h1>
-      </Link>
+      <h1
+        style={{
+          color: "gray",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <FaHome />
+      </h1>
       <div
         style={{
           display: "flex",

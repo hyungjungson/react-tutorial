@@ -1,47 +1,37 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { useState } from "react";
+import { nanoid } from "nanoid";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addPost, clearForm } from "../index";
 
-// App.jsx에서 props로 전달 받아온다.
-export default function Create({ setDatas, datas }) {
-  // 페이지 이동
-  const navigate = useNavigate();
+export default function Create() {
+  const createForm = useSelector((state) => state.create);
+  const dispatch = useDispatch();
 
-  // 수정할 게시물의 제목,내용을 담는다. useState로 초기값 세팅
-  const [formData, setFormData] = useState({
+  const [inputs, setInputs] = useState({
     title: "",
     content: "",
   });
-
-  // 입력 값 변경 시
-  const handleChange = (e) => {
-    // 입력 필드의 이름과 값 가져오기
-    const { name, value } = e.target;
-    // setFormData 함수를 호출해 이전 폼 데이터 업데이트
-    // 이전 폼 데이터를 복제해 변경 값을 새로운 값으로 저장
-    setFormData((prevFormData) => ({
-      // prevFormData를 spread문법으로 펼쳐서
-      ...prevFormData,
-      // 새로운 입력 필드 name 사용하여 해당 값을 업데이트
-      [name]: value,
+  const navigate = useNavigate();
+  const onChangeHandler = (e) => {
+    setInputs((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
     }));
   };
 
-  // 추가하기 버튼 클릭 시 동작
-  const handleSubmit = (e) => {
-    // 현재 이벤트 동작 중단
-    e.preventDefault();
-    // 새로운 게시물을 생성하기 위한 id 생성
-    const newId = datas.length + 1;
-    const newData = { id: newId, ...formData };
-    // 새 게시물을 기존 데이터에 추가하고 입력 값 초기화
-    setDatas([...datas, newData]);
-    setFormData({
-      title: "",
-      content: "",
-    });
-    // 추가 후 메인 페이지로 이동
+  const onAddBtnHandler = (e) => {
+    dispatch(
+      addPost({
+        id: nanoid(),
+        author: "병수",
+        title: inputs.title,
+        content: inputs.content,
+      })
+    );
+    dispatch(clearForm()); // 폼 초기화
     navigate("/");
   };
 
@@ -56,12 +46,24 @@ export default function Create({ setDatas, datas }) {
             flexDirection: "column",
             justifyContent: "space-evenly",
           }}
-          onSubmit={handleSubmit}
+          // onSubmit={(e) => {
+          //   e.preventDefault();
+          //   setPosts((prev) => {
+          //     return [
+          //       ...prev,
+          //       {
+          //         id: nanoid(),
+          //         author: "병수",
+          //         ...inputs,
+          //       },
+          //     ];
+          //   });
+          //   navigate("/");
+          // }}
         >
           <div>
             <input
               name="title"
-              value={formData.title}
               placeholder="제목"
               style={{
                 width: "100%",
@@ -72,7 +74,8 @@ export default function Create({ setDatas, datas }) {
                 padding: "8px",
                 boxSizing: "border-box",
               }}
-              onChange={handleChange}
+              value={inputs.title}
+              onChange={onChangeHandler}
             />
           </div>
           <div
@@ -82,7 +85,6 @@ export default function Create({ setDatas, datas }) {
           >
             <textarea
               name="content"
-              value={formData.content}
               placeholder="내용"
               style={{
                 resize: "none",
@@ -94,7 +96,8 @@ export default function Create({ setDatas, datas }) {
                 padding: "12px",
                 boxSizing: "border-box",
               }}
-              onChange={handleChange}
+              value={inputs.content}
+              onChange={onChangeHandler}
             />
           </div>
           <button
@@ -107,6 +110,7 @@ export default function Create({ setDatas, datas }) {
               backgroundColor: "skyblue",
               cursor: "pointer",
             }}
+            onClick={onAddBtnHandler}
           >
             추가하기
           </button>
