@@ -27,8 +27,8 @@ export default function Create() {
       addPost({
         id: nanoid(),
         author: "병수",
-        title: createForm.title,
-        content: createForm.content,
+        title: inputs.title,
+        content: inputs.content,
       })
     );
     dispatch(clearForm()); // 폼 초기화
