@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 function App() {
+  // redux store에서 '게시물들' 상태 가져오기
   const posts = useSelector((state) => state.게시물들);
   return (
     // 페이지 이동에 사용되는 Route 태그를 위해선 Routes로 먼저 감싸야 한다.

@@ -9,7 +9,10 @@ export default function Detail() {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  // redux store에서 '게시물들' 상태 가져오기
   const posts = useSelector((state) => state.게시물들);
+
+  // 게시물 posts에서 id가 일치하는 게시물을 찾아 post 변수에 할당
   const post = posts.find((post) => post.id === id);
 
   return (
