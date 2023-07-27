@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deletePost } from "../index";
 
 export default function Main() {
+  // redux store에서 '게시물들' 상태 가져오기
   const posts = useSelector((state) => state.게시물들);
   const dispatch = useDispatch();
 
